@@ -1,16 +1,21 @@
 build:
 	@echo
 	@echo "==> Building <=="
-	@ ./scripts/build.sh
+	@./scripts/build.sh
 
 run:
 	@echo
 	@echo "==> Running <=="
-	@ ./scripts/run.sh
+	@./scripts/run.sh
 
 test:
 	@echo
 	@echo "==> Testing <=="
 	@ rm -rf ./tmp_data
-	@ mkdir ./tmp_data
-	@ ./scripts/test.sh
+	@mkdir ./tmp_data
+	@./scripts/test.sh
+
+clean:
+	@echo
+	@echo "==> Cleaning <=="
+	@./scripts/clean.sh

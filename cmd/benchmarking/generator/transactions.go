@@ -34,8 +34,28 @@ func Create(filePath string) {
 }
 
 // Sign signs a transaction that was generated offline.
-func Sign(filePath string) {
-	// Sign Transaction
+func Sign(unsignedTxPath string, signedTxOutputFile string) {
+
+	fromAddress := "sif1t60c9055s8y2u4m6dyt4fnpa3j2s59al3m283r"
+	chainId := "monkey-bars"
+
+	args := []string{"sign",       unsignedTxPath,
+					 "--from",     fromAddress,
+					 "--chain-id", chainId}
+
+	cmd := exec.Command("sifnodecli", args...)
+
+	outfile, err := os.Create(signedTxOutputFile)
+	if err != nil {
+		panic(err)
+	}
+	defer outfile.Close()
+	cmd.Stdout = outfile
+
+	err = cmd.Start(); if err != nil {
+		panic(err)
+	}
+	cmd.Wait()
 }
 
 // Send broadcasts the transaction to a target node.
@@ -48,9 +68,11 @@ func Send() {
 func GenerateTransactions(n int) {
 	// Create test transactions
 	for i := 0; i < n; i++ {
-		filePath := fmt.Sprintf("%d.tx", i)
-		Create(filePath)
-		Sign(filePath)
+		unsignedTx := fmt.Sprintf("%d.tx", i)
+		Create(unsignedTx)
+
+		signedTx := fmt.Sprintf("%d.signed.tx", i)
+		Sign(unsignedTx, signedTx)
 	}
 
 	// Submit test transactions
