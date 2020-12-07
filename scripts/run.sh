@@ -1,1 +1,1 @@
-go run ./cmd/sifnode-benchmarking/main.go
+go run ./cmd/benchmarking/main.go

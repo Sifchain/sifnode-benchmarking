@@ -1,12 +1,13 @@
 package generator
 
 import (
+	"fmt"
 	"log"
 	"os/exec"
 )
 
 // Create generates a transaction offline and stores it in a JSON file.
-func Create(fileName string) {
+func Create(filePath string) {
 	fromAddress := "sif1gr9tkt5k3y9expemamt9dqc26agstw4s8j7l0y"
 	toAddress := "sif18eawx2rdkddewhr5umy86g3hvsx0k9t8nq9kt7"
 	amount := "10000rowan"
@@ -15,7 +16,7 @@ func Create(fileName string) {
 	args := []string{"tx", "send", fromAddress, toAddress, amount,
 					 "--generate-only",
 					 "--chain-id", chainId,
-					 ">", fileName}
+					 ">", filePath}
 
 	_, err := exec.Command("sifnodecli", args...).Output()
 	if err != nil {
@@ -24,7 +25,7 @@ func Create(fileName string) {
 }
 
 // Sign signs a transaction that was generated offline.
-func Sign(fileName string) {
+func Sign(filePath string) {
 	// Sign Transaction
 }
 
@@ -38,8 +39,9 @@ func Send() {
 func GenerateTransactions(n int) {
 	// Create test transactions
 	for i := 0; i < n; i++ {
-		Create("")
-		Sign("")
+		filePath := fmt.Sprintf("data/%d.tx", i)
+		Create(filePath)
+		Sign(filePath)
 	}
 
 	// Submit test transactions
