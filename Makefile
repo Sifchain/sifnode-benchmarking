@@ -11,7 +11,7 @@ run:
 test:
 	@echo
 	@echo "==> Testing <=="
-	@ rm -rf ./tmp_data
+	@rm -rf ./tmp_data
 	@mkdir ./tmp_data
 	@./scripts/test.sh
 
