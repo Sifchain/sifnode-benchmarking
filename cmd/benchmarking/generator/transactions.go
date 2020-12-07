@@ -2,6 +2,7 @@ package generator
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 )
@@ -9,20 +10,21 @@ import (
 // Create generates a transaction offline and stores it in a JSON file.
 func Create(filePath string) {
 
-	fromAddress := "sif1t60c9055s8y2u4m6dyt4fnpa3j2s59al3m283r"
-	toAddress := "sif18eawx2rdkddewhr5umy86g3hvsx0k9t8nq9kt7"
+	fromAddress := "sif1rwmv253fqsvcg483vrax9xe3nwcu7nc5fzunur"
+	toAddress := "sif1qvt8nm5s40xl9axahe33xzat7jxc8jnwktvgyh"
 	amount := "10000rowan"
 	chainId := "monkey-bars"
 
-	args := []string{"tx", "send", fromAddress, toAddress, amount,
-					 "--generate-only",
-					 "--chain-id", chainId}
+	args := []string{"tx",
+					 "send", 			fromAddress, toAddress, amount,
+					 "--chain-id", 		chainId,
+					 "--generate-only"}
 
 	cmd := exec.Command("sifnodecli", args...)
 
 	outfile, err := os.Create(filePath)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer outfile.Close()
 	cmd.Stdout = outfile
@@ -36,18 +38,21 @@ func Create(filePath string) {
 // Sign signs a transaction that was generated offline.
 func Sign(unsignedTxPath string, signedTxOutputFile string) {
 
-	fromAddress := "sif1t60c9055s8y2u4m6dyt4fnpa3j2s59al3m283r"
+	// yes s6c8kXlIzjxDohE4QdY7HbfSt3VUwnOZ | sifnodecli keys show user1 -a
+
+	fromAddress := "sif1rwmv253fqsvcg483vrax9xe3nwcu7nc5fzunur"
 	chainId := "monkey-bars"
 
-	args := []string{"sign",       unsignedTxPath,
-					 "--from",     fromAddress,
-					 "--chain-id", chainId}
+	args := []string{"tx",
+					 "sign",       			unsignedTxPath,
+					 "--from",     			fromAddress,
+					 "--keyring-backend", 	"test"}
 
 	cmd := exec.Command("sifnodecli", args...)
 
 	outfile, err := os.Create(signedTxOutputFile)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer outfile.Close()
 	cmd.Stdout = outfile

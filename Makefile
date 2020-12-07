@@ -11,9 +11,12 @@ run:
 test:
 	@echo
 	@echo "==> Testing <=="
-	@ rm -rf ./tmp_data
-	@mkdir ./tmp_data
 	@./scripts/test.sh
+
+test-save-artifacts:
+	@echo
+	@echo "==> Testing <=="
+	@./scripts/test_save_artifacts.sh
 
 clean:
 	@echo

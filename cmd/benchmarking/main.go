@@ -7,5 +7,5 @@ import (
 
 func main() {
 	fmt.Printf("Hello, world!")
-	g.GenerateTransactions(10)
+	g.Create("test.tx")
 }
