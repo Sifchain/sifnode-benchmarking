@@ -41,7 +41,6 @@ func Sign(unsignedTxPath string, signedTxOutputFile string) {
 	// yes s6c8kXlIzjxDohE4QdY7HbfSt3VUwnOZ | sifnodecli keys show user1 -a
 
 	fromAddress := "sif1rwmv253fqsvcg483vrax9xe3nwcu7nc5fzunur"
-	chainId := "monkey-bars"
 
 	args := []string{"tx",
 					 "sign",       			unsignedTxPath,
