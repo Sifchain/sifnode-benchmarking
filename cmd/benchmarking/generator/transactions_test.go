@@ -28,7 +28,7 @@ func (suite *TransactionsTestSuite) TestCreate() {
 
 	generator.Create(testFileName)
 
-	if _, err := os.Stat("tmp/1.tx"); err == nil || os.IsExist(err) {
+	if _, err := os.Stat(testFileName); err == nil || os.IsExist(err) {
 		fileExists = true
 	} else {
 		fileExists = false
