@@ -1,7 +1,6 @@
 package generator
 
 import (
-	g "github.com/Sifchain/sifnode-benchmarking/cmd/benchmarking/generator"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
@@ -12,7 +11,7 @@ func TestCreate(t *testing.T) {
 	testFileName := "1.tx"
 	fileExists := false
 
-	g.Create(testFileName)
+	Create(testFileName)
 
 	if _, err := os.Stat(testFileName); err == nil || os.IsExist(err) {
 		fileExists = true

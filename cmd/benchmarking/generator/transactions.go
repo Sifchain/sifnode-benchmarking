@@ -18,8 +18,6 @@ func Create(filePath string) {
 					 "--generate-only",
 					 "--chain-id", chainId}
 
-	fmt.Print(args)
-
 	cmd := exec.Command("sifnodecli", args...)
 
 	outfile, err := os.Create(filePath)
@@ -50,7 +48,7 @@ func Send() {
 func GenerateTransactions(n int) {
 	// Create test transactions
 	for i := 0; i < n; i++ {
-		filePath := fmt.Sprintf("data/%d.tx", i)
+		filePath := fmt.Sprintf("%d.tx", i)
 		Create(filePath)
 		Sign(filePath)
 	}
