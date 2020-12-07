@@ -2,40 +2,37 @@ package generator
 
 import (
 	"fmt"
-	"github.com/tkanos/gonfig"
-	"log"
+	"os"
 	"os/exec"
 )
 
-type Configuration struct {
-	FromAddress string
-	ToAddress   string
-	Amount      string
-	ChainId     string
-}
-
 // Create generates a transaction offline and stores it in a JSON file.
 func Create(filePath string) {
-	configuration := Configuration{}
-	err := gonfig.GetConf("../config.json", &configuration)
-	if err != nil {
-		log.Fatal(err)
-	}
 
-	fromAddress := configuration.FromAddress
-	toAddress := configuration.ToAddress
-	amount := configuration.Amount
-	chainId := configuration.ChainId
+	fromAddress := "sif1t60c9055s8y2u4m6dyt4fnpa3j2s59al3m283r"
+	toAddress := "sif18eawx2rdkddewhr5umy86g3hvsx0k9t8nq9kt7"
+	amount := "10000rowan"
+	chainId := "monkey-bars"
 
 	args := []string{"tx", "send", fromAddress, toAddress, amount,
 					 "--generate-only",
-					 "--chain-id", chainId,
-					 ">", filePath}
+					 "--chain-id", chainId}
 
-	_, err = exec.Command("sifnodecli", args...).Output()
+	fmt.Print(args)
+
+	cmd := exec.Command("sifnodecli", args...)
+
+	outfile, err := os.Create(filePath)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
+	defer outfile.Close()
+	cmd.Stdout = outfile
+
+	err = cmd.Start(); if err != nil {
+		panic(err)
+	}
+	cmd.Wait()
 }
 
 // Sign signs a transaction that was generated offline.

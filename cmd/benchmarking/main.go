@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/sifnode-benchmarking/cmd/benchmarking/generator"
+	"github.com/Sifchain/sifnode-benchmarking/cmd/benchmarking/generator"
 )
 
 func main() {
